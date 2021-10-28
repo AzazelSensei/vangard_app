@@ -119,6 +119,15 @@ class _NavigationPageState extends State<NavigationPage> {
           child: const Icon(Icons.leak_add),
           label: "Create Combine",
         ),
+        SpeedDialChild(
+          onTap: () {},
+          labelBackgroundColor: HexColor("9962DB"),
+          labelStyle: const TextStyle(color: Colors.white),
+          foregroundColor: Colors.white,
+          backgroundColor: HexColor("9962DB"),
+          child: const Icon(Icons.leak_add),
+          label: "Sign Out",
+        ),
       ],
     );
   }
