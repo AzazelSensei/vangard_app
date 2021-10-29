@@ -9,14 +9,16 @@ import 'package:vangard_app/pages/view/open_post_view/open_post.dart';
 
 class PostCard extends StatefulWidget {
   final Post data;
-  PostCard(this.data, {Key? key}) : super(key: key);
+  const PostCard(this.data, {Key? key}) : super(key: key);
 
   @override
   _PostCardState createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
+  // ignore: non_constant_identifier_names
   bool selected_fav = true;
+  // ignore: non_constant_identifier_names
   bool selected_book = true;
   @override
   void initState() {

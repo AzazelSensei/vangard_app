@@ -11,7 +11,7 @@ import 'package:vangard_app/pages/view/open_post_view/image_content_scrollbar.da
 class OpenPost extends StatefulWidget {
   final Post data;
   // ignore: use_key_in_widget_constructors
-  OpenPost(this.data);
+  const OpenPost(this.data);
   @override
   _OpenPostState createState() => _OpenPostState();
 }
@@ -113,13 +113,13 @@ class _OpenPostState extends State<OpenPost> {
                           contentPadding: EdgeInsets.symmetric(
                               vertical: context.lowHeight / 4,
                               horizontal: context.lowWidth * 2),
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.comment,
                             color: Colors.black,
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {},
-                            icon: Icon(Icons.send),
+                            icon: const Icon(Icons.send),
                             color: Colors.black,
                           ),
                           border: OutlineInputBorder(

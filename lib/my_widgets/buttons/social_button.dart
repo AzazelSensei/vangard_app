@@ -8,12 +8,11 @@ class SocialButton extends StatelessWidget {
   final String? title;
   final Widget? icon;
   final String? image;
-  SocialButton(
-      {required this.onTap, this.color, this.title, this.icon, this.image});
+  const SocialButton(
+      {Key? key, required this.onTap, this.color, this.title, this.icon, this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Material(
       color: color ?? Colors.blue,
       borderRadius: BorderRadius.circular(50),

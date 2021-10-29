@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _completer = Completer<Null>();
+  final _completer = Completer<void>();
   Future<void> _getMethod() async =>
       await Future.delayed(const Duration(seconds: 3), () {
         if (!_completer.isCompleted) _completer.complete();

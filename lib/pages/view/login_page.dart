@@ -9,7 +9,7 @@ import 'package:vangard_app/navigation_page.dart';
 import 'package:vangard_app/pages/view/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();

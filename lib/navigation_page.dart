@@ -26,7 +26,7 @@ class _NavigationPageState extends State<NavigationPage> {
         body: dynamicPage,
         floatingActionButton: floatingActionButton(),
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: GNav(
               rippleColor: Colors.grey, // tab button ripple color when pressed
               hoverColor: Colors.grey, // tab button hover color
@@ -93,7 +93,7 @@ class _NavigationPageState extends State<NavigationPage> {
         SpeedDialChild(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => AddPost()));
+                context, MaterialPageRoute(builder: (context) => const AddPost()));
           },
           shape: const CircleBorder(),
           labelBackgroundColor: HexColor("9962DB"),
@@ -123,7 +123,7 @@ class _NavigationPageState extends State<NavigationPage> {
         SpeedDialChild(
           onTap: () {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => LoginPage()));
+                context, MaterialPageRoute(builder: (context) => const LoginPage()));
           },
           labelBackgroundColor: HexColor("9962DB"),
           labelStyle: const TextStyle(color: Colors.white),
@@ -138,15 +138,15 @@ class _NavigationPageState extends State<NavigationPage> {
 
   Widget get dynamicPage {
     if (_index == 0) {
-      return HomePage();
+      return const HomePage();
     } else if (_index == 1) {
-      return CompetitionPage();
+      return const CompetitionPage();
     } else if (_index == 2) {
-      return CreatePage();
+      return const CreatePage();
     } else if (_index == 3) {
-      return ProfilePage();
+      return const ProfilePage();
     } else {
-      return Text('NotFound');
+      return const Text('NotFound');
     }
   }
 }

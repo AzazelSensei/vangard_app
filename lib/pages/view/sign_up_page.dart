@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:vangard_app/pages/view/login_page.dart';
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  int _aktifStep = 0;
-  late String isim, mail, sifre;
-  late List<Step> butunStepler;
+  int _currentStep = 0;
+  late String name, mail, password;
+  late List<Step> allSteps;
   bool hata = false;
 
   var key0 = GlobalKey<FormFieldState>();
@@ -24,87 +27,103 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    butunStepler = _tumStepler();
+    allSteps = _allSteps();
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginPage())),
-          icon: const Icon(Icons.arrow_back_ios),
+    return Theme(
+      data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(primary: HexColor("9962DB"))),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const LoginPage())),
+            icon: const Icon(Icons.arrow_back_ios),
+          ),
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Sign Up',
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+          ),
+          centerTitle: true,
         ),
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Sign Up',
-          style: Theme.of(context)
-              .textTheme
-              .headline5!
-              .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Stepper(
-          steps: butunStepler,
-          currentStep: _aktifStep,
-          /* onStepTapped: (tiklanilanStep) {
-            setState(() {
-              _aktifStep = tiklanilanStep;
-            });
-          },*/
-          onStepContinue: () {
-            setState(() {
-              ileriButonuKontrolu();
-            });
-          },
-          onStepCancel: () {
-            setState(() {
-              if (_aktifStep > 0) {
-                _aktifStep--;
-              } else {
-                _aktifStep = 0;
-              }
-            });
-          },
+        body: SingleChildScrollView(
+          child: Stepper(
+            steps: allSteps,
+            currentStep: _currentStep,
+            /* onStepTapped: (tiklanilanStep) {
+              setState(() {
+                _aktifStep = tiklanilanStep;
+              });
+            },*/
+            onStepContinue: () {
+              setState(() {
+                forwardButtonControl();
+              });
+            },
+            onStepCancel: () {
+              setState(() {
+                if (_currentStep > 0) {
+                  _currentStep--;
+                } else {
+                  _currentStep = 0;
+                }
+              });
+            },
+          ),
         ),
       ),
     );
   }
 
-  List<Step> _tumStepler() {
+  List<Step> _allSteps() {
     List<Step> stepler = [
       Step(
-        title: Text("UserName başlık"),
-        subtitle: Text("UserName alt başlık"),
-        state: _stateleriAyarla(0),
+        title: Text(
+          "UserID",
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(color: Colors.black, fontSize: 17),
+        ),
+        subtitle: const Text("*Cannot be less than 3 characters."),
+        state: _setState(0),
         isActive: true,
         content: TextFormField(
             key: key0,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              labelText: "LabelText",
-              hintText: "HintText",
+              hintText: "UserID",
             ),
             validator: (girilenDeger) {
-              if (girilenDeger!.length < 6) {
-                return "En az 6 karakter giriniz";
-              } else
+              if (girilenDeger!.length < 3) {
+                return "Cannot be less than 3 characters";
+              } else {
                 return null;
+              }
             },
-            onSaved: (girilenDeger) {
+            onSaved: (value) {
               setState(() {
-                isim = girilenDeger!;
+                name = value!;
               });
             }),
       ),
       Step(
-        title: Text("Mail Başlık"),
-        subtitle: Text("Mail alt başlık"),
-        state: _stateleriAyarla(1),
+        title: Text(
+          "Mail",
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(color: Colors.black, fontSize: 17),
+        ),
+        subtitle: const Text("*Please enter a valid e-mail."),
+        state: _setState(1),
         isActive: true,
         content: TextFormField(
             key: key1,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: "MailLabel",
               hintText: "MailHint",
@@ -112,8 +131,9 @@ class _SignUpPageState extends State<SignUpPage> {
             validator: (girilenDeger) {
               if (girilenDeger!.length < 6 || !girilenDeger.contains("@")) {
                 return "Geçerli bir mail adresi giriniz";
-              } else
+              } else {
                 return null;
+              }
             },
             onSaved: (girilenDeger) {
               setState(() {
@@ -122,13 +142,19 @@ class _SignUpPageState extends State<SignUpPage> {
             }),
       ),
       Step(
-        title: Text("Şifre başlık"),
-        subtitle: Text("Şifre alt başlık"),
-        state: _stateleriAyarla(2),
+        title: Text(
+          "Şifre başlık",
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(color: Colors.black, fontSize: 17),
+        ),
+        subtitle: const Text("Şifre alt başlık"),
+        state: _setState(2),
         isActive: true,
         content: TextFormField(
           key: key2,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             labelText: "ŞifreText",
             hintText: "ŞifreHint",
@@ -136,12 +162,13 @@ class _SignUpPageState extends State<SignUpPage> {
           validator: (girilenDeger) {
             if (girilenDeger!.length < 6) {
               return "Şifreniz en az altı karakter olmalı.";
-            } else
+            } else {
               return null;
+            }
           },
           onSaved: (girilenDeger) {
             setState(() {
-              sifre = girilenDeger!;
+              password = girilenDeger!;
             });
           },
         ),
@@ -150,23 +177,25 @@ class _SignUpPageState extends State<SignUpPage> {
     return stepler;
   }
 
-  _stateleriAyarla(int oankiStep) {
-    if (_aktifStep == oankiStep) {
+  _setState(int oankiStep) {
+    if (_currentStep == oankiStep) {
       if (hata) {
         return StepState.error;
-      } else
+      } else {
         return StepState.editing;
-    } else
+      }
+    } else {
       return StepState.complete;
+    }
   }
 
-  void ileriButonuKontrolu() {
-    switch (_aktifStep) {
+  void forwardButtonControl() {
+    switch (_currentStep) {
       case 0:
         if (key0.currentState!.validate()) {
           key0.currentState!.save();
           hata = false;
-          _aktifStep = 1;
+          _currentStep = 1;
         } else {
           hata = true;
         }
@@ -176,7 +205,7 @@ class _SignUpPageState extends State<SignUpPage> {
         if (key1.currentState!.validate()) {
           key1.currentState!.save();
           hata = false;
-          _aktifStep = 2;
+          _currentStep = 2;
         } else {
           hata = true;
         }
@@ -195,6 +224,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void formTamamlandi() {
-    debugPrint("Girilen değerler : isim : $isim, mail : $mail, şifre : $sifre");
+    debugPrint(
+        "Girilen değerler : isim : $name, mail : $mail, şifre : $password");
   }
 }
