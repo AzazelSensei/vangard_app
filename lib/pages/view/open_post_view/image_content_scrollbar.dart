@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:vangard_app/pages/view/open_post_view/open_post.dart';
 
 class ImageContentScrollBar extends StatelessWidget {
-  const ImageContentScrollBar({
+  ImageContentScrollBar({
     Key? key,
     required this.widget,
   }) : super(key: key);
 
   final OpenPost widget;
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
       radius: const Radius.circular(20),
       isAlwaysShown: true,
+      controller: scrollController,
       child: postListView(context),
     );
   }
 
   ListView postListView(BuildContext context) {
     return ListView(
-      shrinkWrap: false,
-      physics: const AlwaysScrollableScrollPhysics(),
+      shrinkWrap: true,
+      controller: scrollController,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),

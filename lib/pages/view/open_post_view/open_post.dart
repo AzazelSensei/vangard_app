@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:readmore/readmore.dart';
+import 'package:vangard_app/extensions/ui_extension.dart';
 import 'package:vangard_app/models/comment_model.dart';
 import 'package:vangard_app/models/post_model.dart';
 import 'package:vangard_app/pages/view/open_post_view/comment_card.dart';
@@ -23,78 +24,116 @@ class _OpenPostState extends State<OpenPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: aGappBar(context),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                //üst bar //icon-name kısmı
-                const Divider(
-                  height: 0,
-                  color: Colors.black45,
-                  thickness: 1,
-                ), //divider-üst
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.50,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                            child: Column(
-                              children: [
-                                imageZone,
-                                clickableStoreText,
-                                underImageHereIcon,
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ImageContentScrollBar(widget: widget),
-                        ),
-                      ],
-                    ),
-                  ),
-                ), //resim
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  child: Divider(
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Column(
+                children: [
+                  //üst bar //icon-name kısmı
+                  const Divider(
                     height: 0,
                     color: Colors.black45,
                     thickness: 1,
+                  ), //divider-üst
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.50,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              child: Column(
+                                children: [
+                                  imageZone,
+                                  clickableStoreText,
+                                  underImageHereIcon,
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ImageContentScrollBar(widget: widget),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ), //resim
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Divider(
+                      height: 0,
+                      color: Colors.black45,
+                      thickness: 1,
+                    ),
+                  ), //divider-alt
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        aGLikeButton,
+                        aGPostText(context), //text
+                        aGBookmarkIcon,
+                      ],
+                    ), //gönderi alt bar
                   ),
-                ), //divider-alt
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      aGLikeButton,
-                      aGPostText(context), //text
-                      aGBookmarkIcon,
-                    ],
-                  ), //gönderi alt bar
-                ),
-                const Divider(
-                  color: Colors.black54,
-                  thickness: 1,
-                ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: comments.length,
-                    itemBuilder: (context, index) {
-                      return CommentCard(comments[index]);
-                    }),
-              ],
+                  const Divider(
+                    color: Colors.black54,
+                    thickness: 1,
+                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: comments.length,
+                      itemBuilder: (context, index) {
+                        return CommentCard(comments[index]);
+                      }),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: context.lowHeight / 2,
+                        horizontal: context.lowWidth * 1.4),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                          colorScheme:
+                              ColorScheme.light(primary: HexColor("9962DB"))),
+                      child: TextField(
+                        maxLines: null,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: HexColor("EBEBEB"),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: context.lowHeight / 4,
+                              horizontal: context.lowWidth * 2),
+                          prefixIcon: Icon(
+                            Icons.comment,
+                            color: Colors.black,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.send),
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          hintText: 'Post Text',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

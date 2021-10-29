@@ -7,6 +7,7 @@ import 'package:vangard_app/extensions/ui_extension.dart';
 import 'package:vangard_app/pages/view/competition_page.dart';
 import 'package:vangard_app/pages/view/create_page.dart';
 import 'package:vangard_app/pages/view/home_page.dart';
+import 'package:vangard_app/pages/view/login_page.dart';
 import 'package:vangard_app/pages/view/profile_page.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -120,12 +121,15 @@ class _NavigationPageState extends State<NavigationPage> {
           label: "Create Combine",
         ),
         SpeedDialChild(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => LoginPage()));
+          },
           labelBackgroundColor: HexColor("9962DB"),
           labelStyle: const TextStyle(color: Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: HexColor("9962DB"),
-          child: const Icon(Icons.leak_add),
+          child: const Icon(Icons.close_outlined),
           label: "Sign Out",
         ),
       ],

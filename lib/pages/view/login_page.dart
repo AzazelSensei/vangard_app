@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:vangard_app/extensions/ui_extension.dart';
 import 'package:vangard_app/my_widgets/buttons/social_button.dart';
 import 'package:vangard_app/navigation_page.dart';
+import 'package:vangard_app/pages/view/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _rememberMe = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -22,35 +24,43 @@ class _LoginPageState extends State<LoginPage> {
         decoration: backgroundImage,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: size.width * 0.09, right: size.width * 0.09),
-                child: ListView(
-                  children: [
-                    Container(height: context.lowHeight * 3),
-                    Center(
-                      child: loginText,
-                    ),
-                    Container(height: context.lowHeight),
-                    userIdContainer,
-                    Container(height: context.lowHeight),
-                    passwordContainer,
-                    Container(height: context.lowHeight),
-                    loginButton,
-                    Container(height: context.lowHeight * 1.1),
-                    forgotPassText,
-                    Container(height: context.lowHeight),
-                    orConnectWithText,
-                    Container(height: context.lowHeight * 2),
-                    connectionMethodFirstRow,
-                    Container(height: context.lowHeight / 1.5),
-                    connectionMethodSecondRow,
-                    Container(height: context.normalHeight * 1.1),
-                    dontHaveAccountSignUpText,
-                    Container(height: context.normalHeight * 1.1),
-                  ],
+          body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: SafeArea(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: size.width * 0.09, right: size.width * 0.09),
+                  child: ListView(
+                    children: [
+                      Container(height: context.lowHeight * 3),
+                      Center(
+                        child: loginText,
+                      ),
+                      Container(height: context.lowHeight),
+                      userIdContainer,
+                      Container(height: context.lowHeight),
+                      passwordContainer,
+                      Container(height: context.lowHeight),
+                      loginButton,
+                      Container(height: context.lowHeight * 1.1),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [_buildRememberMeCheckbox()]),
+                      Container(height: context.lowHeight),
+                      forgotPassText,
+                      Container(height: context.lowHeight),
+                      orConnectWithText,
+                      Container(height: context.lowHeight * 1.5),
+                      connectionMethodFirstRow,
+                      Container(height: context.lowHeight / 1.5),
+                      connectionMethodSecondRow,
+                      Container(height: context.normalHeight * 1.1),
+                      dontHaveAccountSignUpText,
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -71,7 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                 overlayColor: MaterialStateProperty.all(Colors.black12),
                 shape: MaterialStateProperty.all(const StadiumBorder()),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => SignUpPage()));
+              },
               child: Text.rich(
                 TextSpan(
                   text: "Don't have a account? ",
@@ -199,20 +212,18 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.white, borderRadius: BorderRadius.circular(50)),
         child: Row(
           children: const [
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.lock,
-              ),
-            ),
             Expanded(
-                child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'PASSWORD',
-                border: InputBorder.none,
-              ),
-            )),
+              child: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'PASSWORD',
+                    border: InputBorder.none,
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.black,
+                    ),
+                  )),
+            ),
           ],
         ),
       );
@@ -222,19 +233,18 @@ class _LoginPageState extends State<LoginPage> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(30)),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.person,
-              ),
-            ),
             Expanded(
                 child: TextField(
               obscureText: false,
               decoration: InputDecoration(
                 labelText: 'USER ID',
                 border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
               ),
             )),
           ],
@@ -253,6 +263,39 @@ class _LoginPageState extends State<LoginPage> {
           fit: BoxFit.fill,
         ),
       );
+
+  Widget _buildRememberMeCheckbox() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(1),
+      ),
+      height: 20.0,
+      child: Row(
+        children: <Widget>[
+          Theme(
+            data: ThemeData(unselectedWidgetColor: Colors.white),
+            child: Checkbox(
+              value: _rememberMe,
+              checkColor: Colors.green,
+              activeColor: Colors.white,
+              onChanged: (value) {
+                setState(() {
+                  _rememberMe = value!;
+                });
+              },
+            ),
+          ),
+          Text(
+            'Remember me',
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Colors.white),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget spacer({double? height}) => SizedBox(
         height: height ?? 20,
