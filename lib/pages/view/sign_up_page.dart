@@ -19,6 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   var key0 = GlobalKey<FormFieldState>();
   var key1 = GlobalKey<FormFieldState>();
   var key2 = GlobalKey<FormFieldState>();
+  var key3 = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
@@ -51,6 +52,50 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         body: SingleChildScrollView(
           child: Stepper(
+            controlsBuilder: (context, {onStepCancel, onStepContinue}) {
+              return Container(
+                margin: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                          onPressed: onStepContinue,
+                          child: const Text("CONTİUNE"),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                                const StadiumBorder()),
+                            textStyle: MaterialStateProperty.all(
+                                const TextStyle(fontSize: 15)),
+                            backgroundColor:
+                                MaterialStateProperty.all(HexColor("9962DB")),
+                          )),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    if (_currentStep != 0)
+                      Expanded(
+                          child: ElevatedButton(
+                              onPressed: onStepCancel,
+                              child: const Text("CANCEL"),
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    const StadiumBorder()),
+                                textStyle: MaterialStateProperty.all(
+                                    const TextStyle(fontSize: 15)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    HexColor("9962DB")),
+                              ))),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+              );
+            },
             steps: allSteps,
             currentStep: _currentStep,
             /* onStepTapped: (tiklanilanStep) {
@@ -82,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> {
     List<Step> stepler = [
       Step(
         title: Text(
-          "UserID",
+          "User ID",
           style: Theme.of(context)
               .textTheme
               .headline6!
@@ -97,8 +142,8 @@ class _SignUpPageState extends State<SignUpPage> {
               border: OutlineInputBorder(),
               hintText: "UserID",
             ),
-            validator: (girilenDeger) {
-              if (girilenDeger!.length < 3) {
+            validator: (value) {
+              if (value!.length < 3) {
                 return "Cannot be less than 3 characters";
               } else {
                 return null;
@@ -112,7 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       Step(
         title: Text(
-          "Mail",
+          "Mail Adress",
           style: Theme.of(context)
               .textTheme
               .headline6!
@@ -125,43 +170,41 @@ class _SignUpPageState extends State<SignUpPage> {
             key: key1,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              labelText: "MailLabel",
-              hintText: "MailHint",
+              hintText: "Mail@mail.com",
             ),
-            validator: (girilenDeger) {
-              if (girilenDeger!.length < 6 || !girilenDeger.contains("@")) {
-                return "Geçerli bir mail adresi giriniz";
+            validator: (value) {
+              if (value!.length < 6 || !value.contains("@")) {
+                return "Please enter a valid e-mail.";
               } else {
                 return null;
               }
             },
-            onSaved: (girilenDeger) {
+            onSaved: (value) {
               setState(() {
-                mail = girilenDeger!;
+                mail = value!;
               });
             }),
       ),
       Step(
         title: Text(
-          "Şifre başlık",
+          "Password",
           style: Theme.of(context)
               .textTheme
               .headline6!
               .copyWith(color: Colors.black, fontSize: 17),
         ),
-        subtitle: const Text("Şifre alt başlık"),
+        subtitle: const Text("*Cannot be less than 6 characters."),
         state: _setState(2),
         isActive: true,
         content: TextFormField(
           key: key2,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
-            labelText: "ŞifreText",
-            hintText: "ŞifreHint",
+            hintText: "Password",
           ),
-          validator: (girilenDeger) {
-            if (girilenDeger!.length < 6) {
-              return "Şifreniz en az altı karakter olmalı.";
+          validator: (value) {
+            if (value!.length < 6) {
+              return "Cannot be less than 6 characters.";
             } else {
               return null;
             }
@@ -173,12 +216,43 @@ class _SignUpPageState extends State<SignUpPage> {
           },
         ),
       ),
+      Step(
+        title: Text(
+          "Password Again",
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(color: Colors.black, fontSize: 17),
+        ),
+        subtitle: const Text("*Cannot be less than 6 characters."),
+        state: _setState(3),
+        isActive: true,
+        content: TextFormField(
+          key: key3,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: "Password",
+          ),
+          validator: (value) {
+            if (value!.length < 6) {
+              return "Cannot be less than 6 characters.";
+            } else {
+              return null;
+            }
+          },
+          onSaved: (value) {
+            setState(() {
+              password = value!;
+            });
+          },
+        ),
+      ),
     ];
     return stepler;
   }
 
-  _setState(int oankiStep) {
-    if (_currentStep == oankiStep) {
+  _setState(int currentStep) {
+    if (_currentStep == currentStep) {
       if (hata) {
         return StepState.error;
       } else {
@@ -210,10 +284,19 @@ class _SignUpPageState extends State<SignUpPage> {
           hata = true;
         }
         break;
-
       case 2:
         if (key2.currentState!.validate()) {
           key2.currentState!.save();
+          hata = false;
+          _currentStep = 3;
+        } else {
+          hata = true;
+        }
+        break;
+
+      case 3:
+        if (key3.currentState!.validate()) {
+          key3.currentState!.save();
           hata = false;
           formTamamlandi();
         } else {
@@ -225,6 +308,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void formTamamlandi() {
     debugPrint(
-        "Girilen değerler : isim : $name, mail : $mail, şifre : $password");
+        "Girilen değerler : Name : $name, Mail Adress : $mail, şifre : $password");
   }
 }
