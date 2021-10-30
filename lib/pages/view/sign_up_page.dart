@@ -34,90 +34,94 @@ class _SignUpPageState extends State<SignUpPage> {
     return Theme(
       data: Theme.of(context).copyWith(
           colorScheme: ColorScheme.light(primary: HexColor("9962DB"))),
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () => Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const LoginPage())),
-            icon: const Icon(Icons.arrow_back_ios),
+      child: Container(
+        decoration: backgroundImage,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () => Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const LoginPage())),
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Sign Up',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+            centerTitle: true,
           ),
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Sign Up',
-            style: Theme.of(context)
-                .textTheme
-                .headline5!
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
-          ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Stepper(
-            controlsBuilder: (context, {onStepCancel, onStepContinue}) {
-              return Container(
-                margin: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                          onPressed: onStepContinue,
-                          child: const Text("CONTİUNE"),
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                                const StadiumBorder()),
-                            textStyle: MaterialStateProperty.all(
-                                const TextStyle(fontSize: 15)),
-                            backgroundColor:
-                                MaterialStateProperty.all(HexColor("9962DB")),
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    if (_currentStep != 0)
+          body: SingleChildScrollView(
+            child: Stepper(
+              controlsBuilder: (context, {onStepCancel, onStepContinue}) {
+                return Container(
+                  margin: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
-                          child: ElevatedButton(
-                              onPressed: onStepCancel,
-                              child: const Text("CANCEL"),
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                    const StadiumBorder()),
-                                textStyle: MaterialStateProperty.all(
-                                    const TextStyle(fontSize: 15)),
-                                backgroundColor: MaterialStateProperty.all(
-                                    HexColor("9962DB")),
-                              ))),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                  ],
-                ),
-              );
-            },
-            steps: allSteps,
-            currentStep: _currentStep,
-            /* onStepTapped: (tiklanilanStep) {
-              setState(() {
-                _aktifStep = tiklanilanStep;
-              });
-            },*/
-            onStepContinue: () {
-              setState(() {
-                forwardButtonControl();
-              });
-            },
-            onStepCancel: () {
-              setState(() {
-                if (_currentStep > 0) {
-                  _currentStep--;
-                } else {
-                  _currentStep = 0;
-                }
-              });
-            },
+                        child: ElevatedButton(
+                            onPressed: onStepContinue,
+                            child: const Text("CONTİUNE"),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                  const StadiumBorder()),
+                              textStyle: MaterialStateProperty.all(
+                                  const TextStyle(fontSize: 15)),
+                              backgroundColor:
+                                  MaterialStateProperty.all(HexColor("9962DB")),
+                            )),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      if (_currentStep != 0)
+                        Expanded(
+                            child: ElevatedButton(
+                                onPressed: onStepCancel,
+                                child: const Text("CANCEL"),
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                      const StadiumBorder()),
+                                  textStyle: MaterialStateProperty.all(
+                                      const TextStyle(fontSize: 15)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      HexColor("9962DB")),
+                                ))),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                );
+              },
+              steps: allSteps,
+              currentStep: _currentStep,
+              /* onStepTapped: (tiklanilanStep) {
+                setState(() {
+                  _aktifStep = tiklanilanStep;
+                });
+              },*/
+              onStepContinue: () {
+                setState(() {
+                  forwardButtonControl();
+                });
+              },
+              onStepCancel: () {
+                setState(() {
+                  if (_currentStep > 0) {
+                    _currentStep--;
+                  } else {
+                    _currentStep = 0;
+                  }
+                });
+              },
+            ),
           ),
         ),
       ),
@@ -144,6 +148,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 borderRadius: BorderRadius.circular(30),
               ),
               hintText: "UserID",
+              filled: true,
+              fillColor: Colors.white54,
             ),
             validator: (value) {
               if (value!.length < 3) {
@@ -176,6 +182,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 borderRadius: BorderRadius.circular(30),
               ),
               hintText: "Mail@mail.com",
+              filled: true,
+              fillColor: Colors.white54,
             ),
             validator: (value) {
               if (value!.length < 6 || !value.contains("@")) {
@@ -208,6 +216,8 @@ class _SignUpPageState extends State<SignUpPage> {
               borderRadius: BorderRadius.circular(30),
             ),
             hintText: "Password",
+            filled: true,
+            fillColor: Colors.white54,
           ),
           validator: (value) {
             if (value!.length < 6) {
@@ -241,6 +251,8 @@ class _SignUpPageState extends State<SignUpPage> {
               borderRadius: BorderRadius.circular(30),
             ),
             hintText: "Password",
+            filled: true,
+            fillColor: Colors.white54,
           ),
           validator: (value) {
             if (value!.length < 6) {
@@ -330,4 +342,11 @@ class _SignUpPageState extends State<SignUpPage> {
       ],
     );
   }
+
+  BoxDecoration get backgroundImage => const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/image/background.png"),
+          fit: BoxFit.fill,
+        ),
+      );
 }

@@ -48,6 +48,7 @@ dependencies:
   material_floating_search_bar: ^0.3.4
   flutter_speed_dial: ^4.4.0+2
   video_player: ^2.2.5
+  sqflite: ^2.0.0+4
 
 dev_dependencies:
   flutter_test:
