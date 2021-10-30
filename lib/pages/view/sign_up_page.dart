@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:vangard_app/pages/view/login_page.dart';
+import 'package:vangard_app/pages/view/open_post_view/alert_dialog.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -138,8 +139,10 @@ class _SignUpPageState extends State<SignUpPage> {
         isActive: true,
         content: TextFormField(
             key: key0,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
               hintText: "UserID",
             ),
             validator: (value) {
@@ -168,8 +171,10 @@ class _SignUpPageState extends State<SignUpPage> {
         isActive: true,
         content: TextFormField(
             key: key1,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
               hintText: "Mail@mail.com",
             ),
             validator: (value) {
@@ -198,8 +203,10 @@ class _SignUpPageState extends State<SignUpPage> {
         isActive: true,
         content: TextFormField(
           key: key2,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
             hintText: "Password",
           ),
           validator: (value) {
@@ -229,8 +236,10 @@ class _SignUpPageState extends State<SignUpPage> {
         isActive: true,
         content: TextFormField(
           key: key3,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
             hintText: "Password",
           ),
           validator: (value) {
@@ -298,7 +307,7 @@ class _SignUpPageState extends State<SignUpPage> {
         if (key3.currentState!.validate()) {
           key3.currentState!.save();
           hata = false;
-          formTamamlandi();
+          const AgAlert();
         } else {
           hata = true;
         }
@@ -306,8 +315,19 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  void formTamamlandi() {
-    debugPrint(
-        "Girilen değerler : Name : $name, Mail Adress : $mail, şifre : $password");
+  CupertinoAlertDialog formTamamlandi() {
+    return CupertinoAlertDialog(
+      title: const Text("Registration Succesfull!"),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'OK'),
+          child: const Text('OK'),
+        ),
+      ],
+    );
   }
 }
