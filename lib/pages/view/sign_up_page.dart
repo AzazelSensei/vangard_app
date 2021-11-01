@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:vangard_app/pages/view/login_page.dart';
+import 'package:vangard_app/my_widgets/page_extension/ag_app_bar.dart';
 import 'package:vangard_app/pages/view/open_post_view/alert_dialog.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -38,22 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
         decoration: backgroundImage,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () => Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const LoginPage())),
-              icon: const Icon(Icons.arrow_back_ios),
-            ),
-            automaticallyImplyLeading: false,
-            title: Text(
-              'Sign Up',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
-            ),
-            centerTitle: true,
-          ),
+          appBar: const AGAppBar(title: "SIGN UP"),
           body: SingleChildScrollView(
             child: Stepper(
               controlsBuilder: (context, {onStepCancel, onStepContinue}) {
@@ -61,13 +46,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   margin: const EdgeInsets.all(8),
                   child: Row(
                     children: [
-                      const SizedBox(
-                        width: 20,
-                      ),
                       Expanded(
+                        flex: 8,
                         child: ElevatedButton(
                             onPressed: onStepContinue,
-                            child: const Text("CONTİUNE"),
+                            child: const Text("CONTINUE"),
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(
                                   const StadiumBorder()),
@@ -77,25 +60,24 @@ class _SignUpPageState extends State<SignUpPage> {
                                   MaterialStateProperty.all(HexColor("9962DB")),
                             )),
                       ),
-                      const SizedBox(
-                        width: 20,
+                      Expanded(
+                        child: Container(),
+                        flex: 1,
                       ),
-                      if (_currentStep != 0)
-                        Expanded(
-                            child: ElevatedButton(
-                                onPressed: onStepCancel,
-                                child: const Text("CANCEL"),
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                      const StadiumBorder()),
-                                  textStyle: MaterialStateProperty.all(
-                                      const TextStyle(fontSize: 15)),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      HexColor("9962DB")),
-                                ))),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      //if (_currentStep != 0)
+                      Expanded(
+                          flex: 8,
+                          child: ElevatedButton(
+                              onPressed: onStepCancel,
+                              child: const Text("CANCEL"),
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    const StadiumBorder()),
+                                textStyle: MaterialStateProperty.all(
+                                    const TextStyle(fontSize: 15)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    HexColor("9962DB")),
+                              ))),
                     ],
                   ),
                 );
@@ -138,7 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
               .headline6!
               .copyWith(color: Colors.black, fontSize: 17),
         ),
-        subtitle: const Text("*Cannot be less than 3 characters."),
+        //subtitle: const Text("*Cannot be less than 3 characters."),
         state: _setState(0),
         isActive: true,
         content: TextFormField(
@@ -172,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
               .headline6!
               .copyWith(color: Colors.black, fontSize: 17),
         ),
-        subtitle: const Text("*Please enter a valid e-mail."),
+        //subtitle: const Text("*Please enter a valid e-mail."),
         state: _setState(1),
         isActive: true,
         content: TextFormField(
@@ -186,7 +168,7 @@ class _SignUpPageState extends State<SignUpPage> {
               fillColor: Colors.white54,
             ),
             validator: (value) {
-              if (value!.length < 6 || !value.contains("@")) {
+              if (value!.length < 6 || !validateEmail(value)) {
                 return "Please enter a valid e-mail.";
               } else {
                 return null;
@@ -206,7 +188,7 @@ class _SignUpPageState extends State<SignUpPage> {
               .headline6!
               .copyWith(color: Colors.black, fontSize: 17),
         ),
-        subtitle: const Text("*Cannot be less than 6 characters."),
+        //subtitle: const Text("*Cannot be less than 6 characters."),
         state: _setState(2),
         isActive: true,
         content: TextFormField(
@@ -241,7 +223,7 @@ class _SignUpPageState extends State<SignUpPage> {
               .headline6!
               .copyWith(color: Colors.black, fontSize: 17),
         ),
-        subtitle: const Text("*Cannot be less than 6 characters."),
+        //subtitle: const Text("*Cannot be less than 6 characters."),
         state: _setState(3),
         isActive: true,
         content: TextFormField(
@@ -346,7 +328,13 @@ class _SignUpPageState extends State<SignUpPage> {
   BoxDecoration get backgroundImage => const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/image/background.png"),
-          fit: BoxFit.fill,
+          fit: BoxFit.fitHeight,
         ),
       );
+}
+
+validateEmail(String email) {
+  final emailReg = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+  return emailReg.hasMatch(email);
 }

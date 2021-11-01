@@ -1,19 +1,22 @@
-class Users {
-  Users({this.id, this.mail, this.password});
-  Users.withNoMail({this.id, this.mail, this.password});
-  String? id;
-  String? mail;
+class UserModel {
+  String? userId;
+  String? email;
   String? password;
 
-  Users.fromMap(dynamic obj) {
-    this.id = obj['username'];
-    this.password = obj['password'];
-  }
+  UserModel(this.userId, this.email, this.password);
 
   Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
-    map["username"] = id;
-    map["password"] = password;
+    var map = <String, dynamic>{
+      'user_id': userId,
+      'email': email,
+      'password': password
+    };
     return map;
+  }
+
+  UserModel.fromMap(Map<String, dynamic> map) {
+    userId = map['user_id'];
+    email = map['email'];
+    password = map['password'];
   }
 }

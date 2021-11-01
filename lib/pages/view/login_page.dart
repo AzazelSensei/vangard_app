@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:vangard_app/extensions/ui_extension.dart';
 import 'package:vangard_app/my_widgets/buttons/social_button.dart';
 import 'package:vangard_app/navigation_page.dart';
+import 'package:vangard_app/pages/view/forgot_pass.dart';
 import 'package:vangard_app/pages/view/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -170,7 +171,10 @@ class _LoginPageState extends State<LoginPage> {
             overlayColor: MaterialStateProperty.all(Colors.black12),
             shape: MaterialStateProperty.all(const StadiumBorder()),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => ForgotPass()));
+          },
           child: RichText(
             text: TextSpan(
               text: '',
@@ -236,17 +240,19 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Expanded(
-                child: TextField(
-              obscureText: false,
-              decoration: InputDecoration(
-                labelText: 'USER ID',
-                border: InputBorder.none,
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.black,
+              child: TextField(
+                enabled: true,
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelText: 'USER ID',
+                  border: InputBorder.none,
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            )),
+            ),
           ],
         ),
       );
