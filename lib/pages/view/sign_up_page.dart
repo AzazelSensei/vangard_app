@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:vangard_app/my_widgets/page_extension/ag_app_bar.dart';
+import 'package:vangard_app/pages/view/login_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -307,7 +308,10 @@ class _SignUpPageState extends State<SignUpPage> {
               content: const Text(''),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'OK'),
+                  onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage())),
                   child: const Text('CONFIRM'),
                 ),
               ],

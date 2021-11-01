@@ -5,6 +5,7 @@ import 'package:vangard_app/my_widgets/buttons/buton_test.dart';
 import 'package:vangard_app/my_widgets/page_extension/inputlabel.dart';
 import 'package:vangard_app/my_widgets/page_extension/ag_app_bar.dart';
 import 'package:vangard_app/extensions/ui_extension.dart';
+import 'package:vangard_app/pages/view/login_page.dart';
 
 class ForgotPass extends StatefulWidget {
   const ForgotPass({Key? key}) : super(key: key);
@@ -64,7 +65,11 @@ class _ForgotPassState extends State<ForgotPass> {
                             content: const Text('Introduction send your mail.'),
                             actions: <Widget>[
                               TextButton(
-                                onPressed: () => Navigator.pop(context, 'OK'),
+                                onPressed: () => Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginPage())),
                                 child: const Text('CONFIRM'),
                               ),
                             ],
