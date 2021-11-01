@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:vangard_app/my_widgets/page_extension/ag_app_bar.dart';
+import 'package:vangard_app/my_widgets/page_extension/alert_dialog.dart';
 import 'package:vangard_app/pages/view/open_post_view/alert_dialog.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -301,7 +302,19 @@ class _SignUpPageState extends State<SignUpPage> {
         if (key3.currentState!.validate()) {
           key3.currentState!.save();
           hata = false;
-          const AgAlert();
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => CupertinoAlertDialog(
+              title: const Text('Sign Up Succesfull'),
+              content: const Text(''),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('CONFIRM'),
+                ),
+              ],
+            ),
+          );
         } else {
           hata = true;
         }

@@ -5,7 +5,6 @@ import 'package:vangard_app/my_widgets/buttons/buton_test.dart';
 import 'package:vangard_app/my_widgets/page_extension/inputlabel.dart';
 import 'package:vangard_app/my_widgets/page_extension/ag_app_bar.dart';
 import 'package:vangard_app/extensions/ui_extension.dart';
-import 'package:vangard_app/my_widgets/page_extension/alert_dialog.dart';
 
 class ForgotPass extends StatefulWidget {
   const ForgotPass({Key? key}) : super(key: key);
@@ -56,10 +55,24 @@ class _ForgotPassState extends State<ForgotPass> {
                     ),
                     Padding(padding: context.lowVerPadding * 0.7),
                     ButonTest(
-                      onpressed: () {},
+                      onpressed: () {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              CupertinoAlertDialog(
+                            title: const Text('Your Password'),
+                            content: const Text('Introduction send your mail.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: const Text('CONFIRM'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       title: "CONFIRM",
                     ),
-                    const AgAlertDialog(),
                   ],
                 ),
               ),

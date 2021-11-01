@@ -11,9 +11,7 @@ class ButonTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        onpressed;
-      },
+      onPressed: onpressed,
       child: Container(
         padding: context.lowPadding / 10,
         child: Text(title ?? "Button",
