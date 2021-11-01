@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:vangard_app/my_widgets/page_extension/ag_app_bar.dart';
-import 'package:vangard_app/my_widgets/page_extension/alert_dialog.dart';
-import 'package:vangard_app/pages/view/open_post_view/alert_dialog.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
