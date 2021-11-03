@@ -8,6 +8,8 @@ import 'package:vangard_app/my_widgets/buttons/social_button.dart';
 import 'package:vangard_app/navigation_page.dart';
 import 'package:vangard_app/pages/view/forgot_pass.dart';
 import 'package:vangard_app/pages/view/sign_up_page.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,7 +19,36 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _rememberMe = false;
+  bool _rememberMe = true;
+  TextEditingController userId = TextEditingController();
+  TextEditingController pass = TextEditingController();
+
+  late Box box1;
+
+  @override
+  void initState() {
+    super.initState();
+    createBox();
+  }
+
+  void createBox() async {
+    box1 = await Hive.openBox("logindata");
+    getdata();
+  }
+
+  void getdata() async {
+    if (box1.get('userId') != null) {
+      userId.text = box1.get('userId');
+      _rememberMe = true;
+      setState(() {});
+    }
+    if (box1.get('pass') != null) {
+      pass.text = box1.get('pass');
+      _rememberMe = true;
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -40,17 +71,17 @@ class _LoginPageState extends State<LoginPage> {
                       Center(
                         child: loginText,
                       ),
-                      Container(height: context.lowHeight),
+                      Container(height: context.lowHeight * 2),
                       userIdContainer,
                       Container(height: context.lowHeight),
                       passwordContainer,
                       Container(height: context.lowHeight),
                       loginButton,
-                      Container(height: context.lowHeight * 1.1),
+                      Container(height: context.lowHeight / 1.5),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [_buildRememberMeCheckbox()]),
-                      Container(height: context.lowHeight),
+                      Container(height: context.lowHeight / 5),
                       forgotPassText,
                       Container(height: context.lowHeight),
                       orConnectWithText,
@@ -119,7 +150,9 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Expanded(
             child: SocialButton(
-              onTap: () {},
+              onTap: () {
+                loginRemember;
+              },
               image: "googleicon.png",
               title: "GOOGLE",
               color: Colors.white,
@@ -215,9 +248,10 @@ class _LoginPageState extends State<LoginPage> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(50)),
         child: Row(
-          children: const [
+          children: [
             Expanded(
               child: TextField(
+                  controller: pass,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'PASSWORD',
@@ -238,9 +272,10 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.white, borderRadius: BorderRadius.circular(30)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Expanded(
               child: TextField(
+                controller: userId,
                 enabled: true,
                 obscureText: false,
                 decoration: InputDecoration(
@@ -258,9 +293,9 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Text get loginText => Text(
-        "LOGIN",
+        "VANGARD",
         style: Theme.of(context).textTheme.headline6!.copyWith(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 45),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 38),
       );
 
   BoxDecoration get backgroundImage => BoxDecoration(
@@ -271,36 +306,37 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _buildRememberMeCheckbox() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(1),
-      ),
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              },
-            ),
+    return Row(
+      children: <Widget>[
+        Theme(
+          data: ThemeData(unselectedWidgetColor: Colors.white),
+          child: Checkbox(
+            value: _rememberMe,
+            checkColor: Colors.black,
+            activeColor: Colors.transparent,
+            onChanged: (value) {
+              setState(() {
+                _rememberMe = value!;
+              });
+            },
           ),
-          Text(
-            'Remember me',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1!
-                .copyWith(color: Colors.white),
-          ),
-        ],
-      ),
+        ),
+        Text(
+          'Remember me',
+          style: Theme.of(context)
+              .textTheme
+              .subtitle1!
+              .copyWith(color: Colors.white),
+        ),
+      ],
     );
+  }
+
+  void loginRemember() {
+    if (_rememberMe) {
+      box1.put('userId', userId);
+      box1.put('pass', pass);
+    }
   }
 
   Widget spacer({double? height}) => SizedBox(
