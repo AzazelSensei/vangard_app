@@ -6,6 +6,7 @@ class AGAppBar extends AppBar {
 
   AGAppBar({Key? key, required this.titlee})
       : super(
+          key: key,
           leading: _BackButton(),
           automaticallyImplyLeading: false,
           title: _Title(titlee),
@@ -15,7 +16,7 @@ class AGAppBar extends AppBar {
 
 class _Title extends StatelessWidget {
   final String title;
-  _Title(this.title);
+  const _Title(this.title);
   @override
   Widget build(BuildContext context) {
     return Text(title,
