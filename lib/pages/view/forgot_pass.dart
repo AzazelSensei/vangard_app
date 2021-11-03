@@ -28,8 +28,8 @@ class _ForgotPassState extends State<ForgotPass> {
           decoration: backgroundImage,
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: const AGAppBar(
-              title: "FORGOT MY PASSWORD",
+            appBar: AGAppBar(
+              titlee: "FORGOT MY PASSWORD",
             ),
             body: SafeArea(
               child: Padding(
@@ -65,11 +65,12 @@ class _ForgotPassState extends State<ForgotPass> {
                             content: const Text('Introduction send your mail.'),
                             actions: <Widget>[
                               TextButton(
-                                onPressed: () => Navigator.pushReplacement(
+                                onPressed: () => Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const LoginPage())),
+                                            const LoginPage()),
+                                    (Route<dynamic> route) => false),
                                 child: const Text('CONFIRM'),
                               ),
                             ],

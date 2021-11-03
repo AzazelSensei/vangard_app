@@ -38,7 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
         decoration: backgroundImage,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: const AGAppBar(title: "SIGN UP"),
+          appBar: AGAppBar(titlee: "SIGN UP"),
           body: SingleChildScrollView(
             child: Stepper(
               controlsBuilder: (context, {onStepCancel, onStepContinue}) {
