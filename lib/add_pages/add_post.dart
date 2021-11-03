@@ -21,7 +21,7 @@ class _AddPostState extends State<AddPost> {
   ImagePicker picker = ImagePicker();
   XFile? _image;
   XFile? _camera;
-  
+
   _imgFromGallery() async {
     _image =
         await picker.pickImage(source: ImageSource.gallery, imageQuality: 100);
@@ -43,10 +43,10 @@ class _AddPostState extends State<AddPost> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: addPostAppBar(context),
+        appBar: addPostAppBar,
         body: Container(
           margin: context.lowPadding * 0.21,
-          decoration: addPostDecoration(),
+          decoration: addPostDecoration,
           child: SingleChildScrollView(
             child: Padding(
               padding: context.lowSymAllPadding,
@@ -57,12 +57,12 @@ class _AddPostState extends State<AddPost> {
                     Image.file(File(_image!.path), fit: BoxFit.fitWidth),
                   if (_camera != null)
                     Image.file(File(_camera!.path), fit: BoxFit.fitWidth),
-                  postTitleTextfield(),
-                  postDivider(),
-                  postTextTextfield(),
-                  postDivider(),
-                  postStoreField(),
-                  postDivider(),
+                  postTitleTextfield,
+                  postDivider,
+                  postTextTextfield,
+                  postDivider,
+                  postStoreField,
+                  postDivider,
                   containerPadding(context),
                 ],
               ),
@@ -74,64 +74,54 @@ class _AddPostState extends State<AddPost> {
     );
   }
 
-  Container containerPadding(BuildContext context) => Container(height: context.lowHeight);
+  Container containerPadding(BuildContext context) =>
+      Container(height: context.lowHeight);
 
-  TextField postStoreField() {
-    return TextField(
-                  maxLines: null,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Store',
-                    border: InputBorder.none,
-                  ),
-                );
-  }
+  TextField get postStoreField => TextField(
+        maxLines: null,
+        obscureText: false,
+        decoration: InputDecoration(
+          labelText: 'Store',
+          border: InputBorder.none,
+        ),
+      );
 
-  TextField postTextTextfield() {
-    return TextField(
-                  maxLines: null,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Post Text',
-                    border: InputBorder.none,
-                  ),
-                );
-  }
+  TextField get postTextTextfield => TextField(
+        maxLines: null,
+        obscureText: false,
+        decoration: InputDecoration(
+          labelText: 'Post Text',
+          border: InputBorder.none,
+        ),
+      );
 
-  Divider postDivider() {
-    return Divider(
-                  color: Colors.black,
-                  height: 1.5,
-                );
-  }
+  Divider get postDivider => Divider(
+        color: Colors.black,
+        height: 1.5,
+      );
 
-  TextField postTitleTextfield() {
-    return TextField(
-                  maxLines: null,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Post Title',
-                    border: InputBorder.none,
-                  ),
-                );
-  }
+  TextField get postTitleTextfield => TextField(
+        maxLines: null,
+        obscureText: false,
+        decoration: InputDecoration(
+          labelText: 'Post Title',
+          border: InputBorder.none,
+        ),
+      );
 
-  BoxDecoration addPostDecoration() {
-    return BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 7,
-                  offset: const Offset(1, 7))
-            ],
-            color: HexColor("F3EDF2"),
-            border: Border.all(color: Colors.black, width: 1),
-            borderRadius: BorderRadius.circular(30));
-  }
+  BoxDecoration get addPostDecoration => BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 7,
+                offset: const Offset(1, 7))
+          ],
+          color: HexColor("F3EDF2"),
+          border: Border.all(color: Colors.black, width: 1),
+          borderRadius: BorderRadius.circular(30));
 
-  AppBar addPostAppBar(BuildContext context) {
-    return AppBar(
+  AppBar get addPostAppBar => AppBar(
         elevation: 0,
         backgroundColor: const Color(0xff9962DB),
         leading: const CupertinoNavigationBarBackButton(
@@ -163,7 +153,6 @@ class _AddPostState extends State<AddPost> {
           ),
         ],
       );
-  }
 
   SpeedDial floatingActionButton() {
     return SpeedDial(

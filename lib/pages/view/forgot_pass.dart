@@ -44,9 +44,9 @@ class _ForgotPassState extends State<ForgotPass> {
                         color: Colors.black54,
                       ),
                     ),
-                    Padding(padding: context.lowVerPadding * 0.7),
+                    padding07(context),
                     orText,
-                    Padding(padding: context.lowVerPadding * 0.7),
+                    padding07(context),
                     const AGInputLabel(
                       labelTexts: ("User ID"),
                       icons: Icon(
@@ -54,31 +54,8 @@ class _ForgotPassState extends State<ForgotPass> {
                         color: Colors.black54,
                       ),
                     ),
-                    Padding(padding: context.lowVerPadding * 0.7),
-                    ButonTest(
-                      onpressed: () {
-                        showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              CupertinoAlertDialog(
-                            title: const Text('Your Password'),
-                            content: const Text('Introduction send your mail.'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginPage()),
-                                    (Route<dynamic> route) => false),
-                                child: const Text('CONFIRM'),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      title: "CONFIRM",
-                    ),
+                    padding07(context),
+                    confirmButton,
                   ],
                 ),
               ),
@@ -88,6 +65,32 @@ class _ForgotPassState extends State<ForgotPass> {
       ),
     );
   }
+
+  Padding padding07(BuildContext context) =>
+      Padding(padding: context.lowVerPadding * 0.7);
+
+  ButonTest get confirmButton => ButonTest(
+        onpressed: () {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => CupertinoAlertDialog(
+              title: const Text('Your Password'),
+              content: const Text('Introduction send your mail.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                      (Route<dynamic> route) => false),
+                  child: const Text('CONFIRM'),
+                ),
+              ],
+            ),
+          );
+        },
+        title: "CONFIRM",
+      );
 
   Padding get orText => Padding(
         padding: context.lowHorPadding * 1,
