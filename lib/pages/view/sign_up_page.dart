@@ -48,17 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       Expanded(
                         flex: 8,
-                        child: ElevatedButton(
-                            onPressed: onStepContinue,
-                            child: const Text("CONTINUE"),
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                  const StadiumBorder()),
-                              textStyle: MaterialStateProperty.all(
-                                  const TextStyle(fontSize: 15)),
-                              backgroundColor:
-                                  MaterialStateProperty.all(HexColor("9962DB")),
-                            )),
+                        child: agElevatedButton(onStepContinue),
                       ),
                       Expanded(
                         child: Container(),
@@ -67,17 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       //if (_currentStep != 0)
                       Expanded(
                           flex: 8,
-                          child: ElevatedButton(
-                              onPressed: onStepCancel,
-                              child: const Text("CANCEL"),
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                    const StadiumBorder()),
-                                textStyle: MaterialStateProperty.all(
-                                    const TextStyle(fontSize: 15)),
-                                backgroundColor: MaterialStateProperty.all(
-                                    HexColor("9962DB")),
-                              ))),
+                          child: agElevatedButtonCancel(onStepCancel)),
                     ],
                   ),
                 );
@@ -110,6 +90,34 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  ElevatedButton agElevatedButtonCancel(VoidCallback? onStepCancel) {
+    return ElevatedButton(
+                            onPressed: onStepCancel,
+                            child: const Text("CANCEL"),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                  const StadiumBorder()),
+                              textStyle: MaterialStateProperty.all(
+                                  const TextStyle(fontSize: 15)),
+                              backgroundColor: MaterialStateProperty.all(
+                                  HexColor("9962DB")),
+                            ));
+  }
+
+  ElevatedButton agElevatedButton(VoidCallback? onStepContinue) {
+    return ElevatedButton(
+                          onPressed: onStepContinue,
+                          child: const Text("CONTINUE"),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                                const StadiumBorder()),
+                            textStyle: MaterialStateProperty.all(
+                                const TextStyle(fontSize: 15)),
+                            backgroundColor:
+                                MaterialStateProperty.all(HexColor("9962DB")),
+                          ));
+  }
+
   List<Step> _allSteps() {
     List<Step> stepler = [
       Step(
@@ -126,8 +134,9 @@ class _SignUpPageState extends State<SignUpPage> {
         content: TextFormField(
             key: key0,
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(10),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(25),
               ),
               hintText: "UserID",
               filled: true,
@@ -160,8 +169,9 @@ class _SignUpPageState extends State<SignUpPage> {
         content: TextFormField(
             key: key1,
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(10),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(25),
               ),
               hintText: "Mail@mail.com",
               filled: true,
@@ -194,8 +204,9 @@ class _SignUpPageState extends State<SignUpPage> {
         content: TextFormField(
           key: key2,
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(10),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(25),
             ),
             hintText: "Password",
             filled: true,
@@ -229,8 +240,9 @@ class _SignUpPageState extends State<SignUpPage> {
         content: TextFormField(
           key: key3,
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(10),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(25),
             ),
             hintText: "Password",
             filled: true,
@@ -308,10 +320,11 @@ class _SignUpPageState extends State<SignUpPage> {
               content: const Text(''),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pushReplacement(
+                  onPressed: () => Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginPage())),
+                          builder: (context) => const LoginPage()),
+                      (Route<dynamic> route) => false),
                   child: const Text('CONFIRM'),
                 ),
               ],
@@ -342,9 +355,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   BoxDecoration get backgroundImage => const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/image/background.png"),
-          fit: BoxFit.fitHeight,
-        ),
+            image: AssetImage("assets/image/background.png"), fit: BoxFit.fill),
       );
 }
 

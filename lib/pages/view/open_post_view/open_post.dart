@@ -115,12 +115,12 @@ class _OpenPostState extends State<OpenPost> {
                               horizontal: context.lowWidth * 2),
                           prefixIcon: const Icon(
                             Icons.comment,
-                            color: Colors.black,
+                            color: Colors.black87,
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {},
                             icon: const Icon(Icons.send),
-                            color: Colors.black,
+                            color: Colors.black87,
                           ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30)),
